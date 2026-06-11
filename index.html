@@ -218,6 +218,7 @@
 
     /* ===== SECTIONS COMMON ===== */
     .section {
+      position: relative;
       padding: 5rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
@@ -431,6 +432,39 @@
 
     .service-card__title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
     .service-card__desc { font-size: 0.9rem; color: var(--gris-medio); line-height: 1.7; }
+
+    .whatsapp-float {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      background: #25D366;
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 0.85rem 1.25rem;
+      box-shadow: 0 20px 50px rgba(37, 211, 102, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      z-index: 5;
+    }
+    .whatsapp-float:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 55px rgba(37, 211, 102, 0.35);
+    }
+    .whatsapp-float__text {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem;
+      line-height: 1.2;
+    }
+    .whatsapp-float__label {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 2px;
+    }
 
     /* ===== TESTIMONIALS ===== */
     .testimonials__grid {
@@ -654,6 +688,10 @@
        <p class="service-card__desc">Póliza automatizada con cobertura completa desde el primer kilómetro hasta la entrega.</p>
       </article>
      </div>
+     <a href="https://w.app/wzsgwn?text=Hola%20ECOVELOX,%20escribenos%20para%20mayor%20informaci%C3%B3n" target="_blank" rel="noopener noreferrer" class="whatsapp-float">
+      <span data-lucide="message-circle" style="width:20px;height:20px;"></span>
+      <span class="whatsapp-float__text">Escríbenos para<br>mayor información</span>
+     </a>
     </section><!-- TESTIMONIOS -->
     <section class="section" id="testimonios" style="background: var(--gris-claro); max-width: 100%; padding: 5rem 2rem;">
      <h2 class="section__title">Lo que dicen nuestros clientes</h2>
