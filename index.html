@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECOVELOX - Transporte Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    /* ===== CSS CUSTOM PROPERTIES ===== */
+    :root {
+      --verde-principal: #059669;
+      --verde-esmeralda: #047857;
+      --verde-acento: #6EE7B7;
+      --verde-menta: #A7F3D0;
+      --blanco: #FFFFFF;
+      --gris-oscuro: #1F2937;
+      --gris-medio: #4B5563;
+      --gris-claro: #F3F4F6;
+      --sombra: 0 4px 30px rgba(0, 0, 0, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; height: 100%; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--gris-oscuro);
+      line-height: 1.6;
+      background: var(--blanco);
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    .app-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    /* ===== HEADER / NAV ===== */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+      transition: var(--transition);
+    }
+
+    .header__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header__logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--verde-esmeralda);
+      text-decoration: none;
+    }
+
+    .header__logo svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .header__nav { display: flex; align-items: center; gap: 2rem; }
+    .header__nav a {
+      text-decoration: none;
+      color: var(--gris-medio);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    .header__nav a:hover { color: var(--verde-principal); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
+    .btn--primary {
+      background: var(--verde-principal);
+      color: var(--blanco);
+    }
+    .btn--primary:hover { background: var(--verde-esmeralda); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3); }
+
+    .btn--outline {
+      background: transparent;
+      color: var(--verde-principal);
+      border: 2px solid var(--verde-principal);
+    }
+    .btn--outline:hover { background: var(--verde-principal); color: var(--blanco); transform: translateY(-2px); }
+
+    .mobile-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--gris-oscuro); }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 8rem 2rem 4rem;
+      min-height: 90%;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, var(--blanco) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(110, 231, 183, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .hero__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero__title {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--gris-oscuro);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero__title span { color: var(--verde-principal); }
+
+    .hero__subtitle {
+      font-size: 1.05rem;
+      color: var(--gris-medio);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .hero__visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero__visual-box {
+      width: 100%;
+      max-width: 450px;
+      aspect-ratio: 4/3;
+      background: linear-gradient(145deg, var(--verde-menta), #d1fae5);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(5, 150, 105, 0.15);
+    }
+
+    .hero__visual-box svg { width: 60%; height: 60%; color: var(--verde-esmeralda); opacity: 0.6; }
+
+    .floating-badge {
+      position: absolute;
+      background: var(--blanco);
+      padding: 0.75rem 1.25rem;
+      border-radius: 16px;
+      box-shadow: var(--sombra);
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .floating-badge--top { top: -10px; right: -10px; }
+    .floating-badge--bottom { bottom: 10px; left: -20px; animation-delay: 1.5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ===== SECTIONS COMMON ===== */
+    .section {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section__title {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .section__subtitle {
+      text-align: center;
+      color: var(--gris-medio);
+      margin-bottom: 3rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ===== SIMULADOR PRESUPUESTO ===== */
+    .simulator {
+      background: var(--gris-claro);
+      padding: 5rem 2rem;
+    }
+
+    .simulator__inner { max-width: 800px; margin: 0 auto; }
+
+    .simulator__form {
+      background: var(--blanco);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--sombra);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.85rem; font-weight: 600; color: var(--gris-medio); }
+    .form-group select, .form-group input {
+      padding: 0.75rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      background: var(--blanco);
+    }
+    .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--verde-acento); }
+
+    .simulator__btn-wrap { grid-column: 1 / -1; text-align: center; margin-top: 1rem; }
+
+    .simulator__result {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: #ecfdf5;
+      border-radius: 12px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--verde-esmeralda);
+      display: none;
+      grid-column: 1 / -1;
+    }
+
+    .simulator__result.active { display: block; animation: fadeIn 0.4s ease; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ===== CO2 CALCULATOR ===== */
+    .co2 {
+      text-align: center;
+      padding: 3rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .co2__indicator {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: conic-gradient(var(--verde-principal) 0% 72%, #e5e7eb 72% 100%);
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .co2__indicator-inner {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--blanco);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .co2__value { font-size: 2rem; font-weight: 800; color: var(--verde-principal); }
+    .co2__label { font-size: 0.75rem; color: var(--gris-medio); }
+
+    /* ===== TRACKING ===== */
+    .tracking {
+      background: var(--gris-claro);
+      padding: 5rem 2rem;
+    }
+
+    .tracking__inner { max-width: 700px; margin: 0 auto; }
+
+    .tracking__input-wrap {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tracking__input-wrap input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.85rem 1.25rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .tracking__input-wrap input:focus { outline: none; border-color: var(--verde-acento); }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #e5e7eb;
+      border-radius: 3px;
+    }
+
+    .timeline__step {
+      position: relative;
+      padding-bottom: 2rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline__step::before {
+      content: '';
+      position: absolute;
+      left: -1.5rem;
+      top: 4px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      border: 3px solid var(--blanco);
+    }
+
+    .timeline__step--done::before { background: var(--verde-principal); }
+    .timeline__step--active::before { background: var(--verde-acento); box-shadow: 0 0 0 4px rgba(110, 231, 183, 0.3); }
+
+    .timeline__step h4 { font-size: 0.95rem; font-weight: 600; }
+    .timeline__step p { font-size: 0.8rem; color: var(--gris-medio); }
+
+    /* ===== SERVICES GRID ===== */
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: var(--blanco);
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--verde-principal), var(--verde-acento));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
+    }
+
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-card__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: #ecfdf5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: var(--verde-principal);
+    }
+
+    .service-card__title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .service-card__desc { font-size: 0.9rem; color: var(--gris-medio); line-height: 1.7; }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--blanco);
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .testimonial-card__stars { color: #FBBF24; margin-bottom: 0.75rem; font-size: 1.1rem; }
+    .testimonial-card__text { font-size: 0.9rem; color: var(--gris-medio); margin-bottom: 1rem; line-height: 1.7; font-style: italic; }
+    .testimonial-card__author { font-weight: 600; font-size: 0.85rem; }
+    .testimonial-card__role { font-size: 0.8rem; color: var(--gris-medio); }
+
+    /* ===== PARTNERS ===== */
+    .partners {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      padding: 2rem 0;
+      opacity: 0.5;
+    }
+
+    .partners span { font-weight: 700; font-size: 1.1rem; color: var(--gris-medio); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--gris-oscuro);
+      color: var(--blanco);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .footer__col h4 { font-size: 1rem; margin-bottom: 1rem; color: var(--verde-acento); }
+    .footer__col a { display: block; color: #9CA3AF; text-decoration: none; font-size: 0.85rem; margin-bottom: 0.5rem; transition: var(--transition); }
+    .footer__col a:hover { color: var(--blanco); }
+    .footer__col p { color: #9CA3AF; font-size: 0.85rem; line-height: 1.6; }
+
+    .footer__subscribe {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .footer__subscribe input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      color: var(--blanco);
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    .footer__subscribe input::placeholder { color: #6B7280; }
+
+    .footer__subscribe button {
+      padding: 0.6rem 1.25rem;
+      background: var(--verde-principal);
+      color: var(--blanco);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    .footer__subscribe button:hover { background: var(--verde-acento); color: var(--gris-oscuro); }
+
+    .footer__bottom {
+      max-width: 1200px;
+      margin: 2rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6B7280;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header__nav { display: none; }
+      .mobile-toggle { display: block; }
+      .hero__inner { grid-template-columns: 1fr; text-align: center; }
+      .hero__subtitle { margin-left: auto; margin-right: auto; }
+      .hero__actions { justify-content: center; }
+      .hero__visual { margin-top: 2rem; }
+      .simulator__form { grid-template-columns: 1fr; }
+      .tracking__input-wrap { flex-direction: column; }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body class="h-full">
+  <div class="app-wrapper"><!-- HEADER -->
+   <header class="header" role="banner">
+    <div class="header__inner"><a href="#" class="header__logo">
+      <svg viewbox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="12" width="20" height="10" rx="2" /> <path d="M22 14h5l3 4v4h-8v-8z" /> <circle cx="7" cy="24" r="2" /><circle cx="25" cy="24" r="2" /> <path d="M13 8c2-3 6-3 8 0" stroke-width="1.5" opacity="0.6" />
+      </svg> ECOVELOX </a>
+     <nav class="header__nav" role="navigation" aria-label="Main navigation"><a href="#servicios">Servicios</a> <a href="#simulador">Cotizar</a> <a href="#rastreo">Rastreo</a> <a href="#testimonios">Testimonios</a> <a href="https://wa.me/34912345678" target="_blank" rel="noopener noreferrer" class="btn btn--primary" style="background: #25D366;"><i data-lucide="phone" style="width:16px;height:16px;"></i> WhatsApp</a> <a href="#rastreo" class="btn btn--primary"><i data-lucide="map-pin" style="width:16px;height:16px;"></i> Rastrear Envío</a>
+     </nav><button class="mobile-toggle" aria-label="Toggle menu"><i data-lucide="menu"></i></button>
+    </div>
+   </header>
+   <main role="main"><!-- HERO -->
+    <section class="hero" id="inicio">
+     <div class="hero__inner">
+      <div class="hero__content">
+       <h1 class="hero__title" id="heroTitle">El transporte del futuro: <span>Inteligente, seguro y ecológico.</span></h1>
+       <p class="hero__subtitle" id="heroSubtitle">Mudanzas residenciales y logística de mercancías con monitoreo en tiempo real y huella de carbono neutral.</p>
+       <div class="hero__actions"><a href="#simulador" class="btn btn--primary" id="ctaQuote">Cotizar al Instante</a> <a href="#servicios" class="btn btn--outline">Ver Servicios</a>
+       </div>
+      </div>
+      <div class="hero__visual">
+       <div class="hero__visual-box">
+        <svg viewbox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="10" y="30" width="60" height="30" rx="4" /> <path d="M70 38h20l12 10v12H70V38z" /> <circle cx="25" cy="64" r="5" /><circle cx="88" cy="64" r="5" /> <path d="M35 25c5-10 20-10 25 0" opacity="0.5" /> <path d="M50 20c3-6 12-6 15 0" opacity="0.3" />
+        </svg>
+        <div class="floating-badge floating-badge--top">
+         🌱 Carbon Neutral
+        </div>
+        <div class="floating-badge floating-badge--bottom">
+         📍 GPS en vivo
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- SIMULADOR -->
+    <section class="simulator" id="simulador">
+     <div class="simulator__inner">
+      <h2 class="section__title">Simulador de Presupuesto</h2>
+      <p class="section__subtitle">Obtén una tarifa estimada en segundos</p>
+      <form class="simulator__form" id="simulatorForm">
+       <div class="form-group"><label for="origen">Origen</label> <select id="origen"><option>Madrid</option><option>Barcelona</option><option>Valencia</option><option>Sevilla</option></select>
+       </div>
+       <div class="form-group"><label for="destino">Destino</label> <select id="destino"><option>Barcelona</option><option>Madrid</option><option>Valencia</option><option>Sevilla</option></select>
+       </div>
+       <div class="form-group"><label for="tipoCarga">Tipo de Carga</label> <select id="tipoCarga"><option>Mudanza Residencial</option><option>Mudanza Corporativa</option><option>Mercancía B2B</option></select>
+       </div>
+       <div class="form-group"><label for="tamano">Tamaño del Camión</label> <select id="tamano"><option>Pequeño (3.5 ton)</option><option>Mediano (8 ton)</option><option>Grande (14 ton)</option></select>
+       </div>
+       <div class="simulator__btn-wrap"><button type="submit" class="btn btn--primary">Calcular Tarifa Estimada</button>
+       </div>
+       <div class="simulator__result" id="simResult"></div>
+      </form>
+     </div>
+    </section><!-- CO2 -->
+    <section class="co2" id="co2">
+     <h2 class="section__title">Huella de Carbono</h2>
+     <p class="section__subtitle">Tu impacto positivo al elegirnos</p>
+     <div class="co2__indicator">
+      <div class="co2__indicator-inner"><span class="co2__value">72%</span> <span class="co2__label">menos CO₂</span>
+      </div>
+     </div>
+     <p style="color: var(--gris-medio); font-size: 0.9rem;">Nuestra flota optimizada reduce hasta un 72% las emisiones comparada con el transporte convencional.</p>
+    </section><!-- TRACKING -->
+    <section class="tracking" id="rastreo">
+     <div class="tracking__inner">
+      <h2 class="section__title">Rastreo en Tiempo Real</h2>
+      <p class="section__subtitle">Ingresa tu código de seguimiento</p>
+      <div class="tracking__input-wrap"><input type="text" placeholder="Ej: ECO-2024-78451" id="trackingInput" aria-label="Código de seguimiento"> <button class="btn btn--primary" id="trackBtn">Rastrear</button>
+      </div>
+      <div class="timeline" id="timeline">
+       <div class="timeline__step timeline__step--done">
+        <h4>Recogido</h4>
+        <p>Paquete recolectado en origen</p>
+       </div>
+       <div class="timeline__step timeline__step--done">
+        <h4>En tránsito</h4>
+        <p>Salida del centro de distribución</p>
+       </div>
+       <div class="timeline__step timeline__step--active">
+        <h4>En camino</h4>
+        <p>A 120 km del destino</p>
+       </div>
+       <div class="timeline__step">
+        <h4>Entregado</h4>
+        <p>Pendiente de entrega</p>
+       </div>
+      </div>
+     </div>
+    </section><!-- SERVICIOS -->
+    <section class="section" id="servicios">
+     <h2 class="section__title" id="servicesTitle">Nuestros Servicios</h2>
+     <p class="section__subtitle">Soluciones integrales para cada necesidad logística</p>
+     <div class="services__grid">
+      <article class="service-card">
+       <div class="service-card__icon">
+        <i data-lucide="package" style="width:28px;height:28px;"></i>
+       </div>
+       <h3 class="service-card__title">Mudanzas Inteligentes</h3>
+       <p class="service-card__desc">Embalaje codificado por QR, desmontaje profesional y personal certificado para tu tranquilidad total.</p>
+      </article>
+      <article class="service-card">
+       <div class="service-card__icon">
+        <i data-lucide="truck" style="width:28px;height:28px;"></i>
+       </div>
+       <h3 class="service-card__title">Traslado B2B</h3>
+       <p class="service-card__desc">Logística Just-in-Time con sensores de temperatura y humedad para mercancías sensibles.</p>
+      </article>
+      <article class="service-card">
+       <div class="service-card__icon">
+        <i data-lucide="shield-check" style="width:28px;height:28px;"></i>
+       </div>
+       <h3 class="service-card__title">Seguro de Carga Total</h3>
+       <p class="service-card__desc">Póliza automatizada con cobertura completa desde el primer kilómetro hasta la entrega.</p>
+      </article>
+     </div>
+    </section><!-- TESTIMONIOS -->
+    <section class="section" id="testimonios" style="background: var(--gris-claro); max-width: 100%; padding: 5rem 2rem;">
+     <h2 class="section__title">Lo que dicen nuestros clientes</h2>
+     <p class="section__subtitle">Más de 2,000 mudanzas exitosas este año</p>
+     <div class="testimonials__grid" style="max-width:1200px; margin: 0 auto;">
+      <div class="testimonial-card">
+       <div class="testimonial-card__stars">
+        ★★★★★
+       </div>
+       <p class="testimonial-card__text">"Mudanza impecable. El rastreo en tiempo real nos dio total tranquilidad durante el traslado corporativo."</p>
+       <p class="testimonial-card__author">María González</p>
+       <p class="testimonial-card__role">Directora de Operaciones, TechMX</p>
+      </div>
+      <div class="testimonial-card">
+       <div class="testimonial-card__stars">
+        ★★★★★
+       </div>
+       <p class="testimonial-card__text">"El embalaje con QR hizo que desempacar fuera increíblemente fácil. Todo llegó perfecto."</p>
+       <p class="testimonial-card__author">Carlos Ruiz</p>
+       <p class="testimonial-card__role">Cliente Residencial</p>
+      </div>
+      <div class="testimonial-card">
+       <div class="testimonial-card__stars">
+        ★★★★★
+       </div>
+       <p class="testimonial-card__text">"La mejor opción para logística sensible. Los sensores de temperatura garantizaron nuestra cadena de frío."</p>
+       <p class="testimonial-card__author">Ana Torres</p>
+       <p class="testimonial-card__role">Gerente de Logística, FreshFood</p>
+      </div>
+     </div>
+     <div class="partners" style="max-width:1200px; margin: 2rem auto 0;"><span>TechMX</span><span>FreshFood</span><span>LogiPro</span><span>Grupo Alfa</span><span>ISO 14001</span>
+     </div>
+    </section>
+   </main><!-- FOOTER -->
+   <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+     <div class="footer__col">
+      <h4>EcoVELOXSL</h4>
+      <p>Transporte inteligente, seguro y ecológico para empresas y hogares.</p>
+     </div>
+     <div class="footer__col">
+      <h4>Legal</h4><a href="#">Términos y Condiciones</a> <a href="#">Política de Privacidad</a> <a href="#">Aviso Legal</a>
+     </div>
+     <div class="footer__col">
+      <h4>Contacto</h4><a href="#">info@ecoveloxsl.mx</a> <a href="#">+52 (55) 1234-5678</a> <a href="#">CDMX, México</a>
+     </div>
+     <div class="footer__col">
+      <h4>Alertas y Consejos</h4>
+      <p>Suscríbete para tips de mudanza y alertas de tráfico.</p>
+      <form class="footer__subscribe" id="subscribeForm"><input type="email" placeholder="Tu email" aria-label="Email de suscripción" required> <button type="submit">Enviar</button>
+      </form>
+     </div>
+    </div>
+    <div class="footer__bottom">
+     <p>© 2024 ECOVELOX. Todos los derechos reservados.</p>
+    </div>
+   </footer>
+  </div>
+  <script>
+  // ===== ELEMENT SDK =====
+  const defaultConfig = {
+    hero_title: 'El transporte del futuro: Inteligente, seguro y ecológico.',
+    hero_subtitle: 'Mudanzas residenciales y logística de mercancías con monitoreo en tiempo real y huella de carbono neutral.',
+    services_title: 'Nuestros Servicios',
+    cta_quote: 'Cotizar al Instante',
+    background_color: '#ffffff',
+    surface_color: '#F3F4F6',
+    text_color: '#1F2937',
+    primary_action_color: '#059669',
+    secondary_action_color: '#6EE7B7',
+    font_family: 'Poppins',
+    font_size: 16
+  };
+
+  function applyConfig(config) {
+    const c = { ...defaultConfig, ...config };
+    document.getElementById('heroTitle').innerHTML = c.hero_title.replace(/(Inteligente.*ecológico\.?)/i, '<span>$1</span>');
+    document.getElementById('heroSubtitle').textContent = c.hero_subtitle;
+    document.getElementById('servicesTitle').textContent = c.services_title;
+    document.getElementById('ctaQuote').textContent = c.cta_quote;
+
+    document.documentElement.style.setProperty('--verde-principal', c.primary_action_color);
+    document.documentElement.style.setProperty('--verde-acento', c.secondary_action_color);
+    document.documentElement.style.setProperty('--gris-oscuro', c.text_color);
+    document.documentElement.style.setProperty('--gris-claro', c.surface_color);
+    document.body.style.background = c.background_color;
+    document.body.style.fontFamily = `${c.font_family}, sans-serif`;
+
+    const base = c.font_size;
+    document.querySelectorAll('.hero__title').forEach(el => el.style.fontSize = `${base * 2.2}px`);
+    document.querySelectorAll('.section__title').forEach(el => el.style.fontSize = `${base * 1.5}px`);
+  }
+
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => applyConfig(config),
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+        { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.primary_action_color || defaultConfig.primary_action_color, set: (v) => { config.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+        { get: () => config.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { config.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+      ],
+      borderables: [],
+      fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+      fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ['hero_title', config.hero_title || defaultConfig.hero_title],
+      ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
+      ['services_title', config.services_title || defaultConfig.services_title],
+      ['cta_quote', config.cta_quote || defaultConfig.cta_quote]
+    ])
+  });
+
+  // ===== SIMULATOR =====
+  document.getElementById('simulatorForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const prices = { 'Pequeño (3.5 ton)': 950, 'Mediano (8 ton)': 1450, 'Grande (14 ton)': 2100 };
+    const routeMultipliers = {
+      'Madrid-Barcelona': 1.25,
+      'Barcelona-Madrid': 1.25,
+      'Madrid-Valencia': 1.10,
+      'Valencia-Madrid': 1.10,
+      'Madrid-Sevilla': 1.30,
+      'Sevilla-Madrid': 1.30,
+      'Barcelona-Valencia': 1.15,
+      'Valencia-Barcelona': 1.15,
+      'Barcelona-Sevilla': 1.35,
+      'Sevilla-Barcelona': 1.35,
+      'Valencia-Sevilla': 1.20,
+      'Sevilla-Valencia': 1.20
+    };
+    const size = document.getElementById('tamano').value;
+    const origin = document.getElementById('origen').value;
+    const destino = document.getElementById('destino').value;
+    const base = prices[size] || 1200;
+    const multiplier = routeMultipliers[`${origin}-${destino}`] || 1.0;
+    const estimate = Math.round(base * multiplier).toLocaleString('es-ES');
+    const result = document.getElementById('simResult');
+    result.textContent = `💰 Tarifa estimada: €${estimate}`;
+    result.classList.add('active');
+  });
+
+  // ===== TRACKING =====
+  document.getElementById('trackBtn').addEventListener('click', () => {
+    const steps = document.querySelectorAll('.timeline__step');
+    steps.forEach(s => { s.classList.remove('timeline__step--done', 'timeline__step--active'); });
+    let idx = 0;
+    const interval = setInterval(() => {
+      if (idx < steps.length - 1) { steps[idx].classList.add('timeline__step--done'); }
+      else { steps[idx].classList.add('timeline__step--active'); clearInterval(interval); }
+      idx++;
+      if (idx >= steps.length) clearInterval(interval);
+    }, 400);
+  });
+
+  // ===== SUBSCRIBE =====
+  document.getElementById('subscribeForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ Suscrito';
+    setTimeout(() => { btn.textContent = 'Enviar'; e.target.reset(); }, 2000);
+  });
+
+  // ===== LUCIDE =====
+  lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a091efe28b50f1d5',t:'MTc4MTAyNjk5MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
